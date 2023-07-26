@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj": {}
+    "d:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj": {}
   },
   "projects": {
-    "D:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj": {
+    "d:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj",
+        "projectUniqueName": "d:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj",
         "projectName": "WebBookStore",
-        "projectPath": "D:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj",
+        "projectPath": "d:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj",
         "packagesPath": "C:\\Users\\TQD\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\obj\\",
+        "outputPath": "d:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\TQD\\AppData\\Roaming\\NuGet\\NuGet.Config",

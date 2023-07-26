@@ -19,7 +19,7 @@ namespace WebBookStore.Migrations
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("WebBookStore.Models.Cartitem", b =>
+            modelBuilder.Entity("WebBookStore.Models.CartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +50,7 @@ namespace WebBookStore.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cartitems");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("WebBookStore.Models.Category", b =>
@@ -179,20 +179,20 @@ namespace WebBookStore.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("WebBookStore.Models.Cartitem", b =>
+            modelBuilder.Entity("WebBookStore.Models.CartItem", b =>
                 {
                     b.HasOne("WebBookStore.Models.Order", "Order")
-                        .WithMany("Cartitems")
+                        .WithMany("CartItems")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("WebBookStore.Models.Product", "Product")
-                        .WithMany("Cartitems")
+                        .WithMany("CartItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WebBookStore.Models.User", "User")
-                        .WithMany("Cartitems")
+                        .WithMany("CartItems")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -237,19 +237,19 @@ namespace WebBookStore.Migrations
 
             modelBuilder.Entity("WebBookStore.Models.Order", b =>
                 {
-                    b.Navigation("Cartitems");
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("WebBookStore.Models.Product", b =>
                 {
-                    b.Navigation("Cartitems");
+                    b.Navigation("CartItems");
 
                     b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("WebBookStore.Models.User", b =>
                 {
-                    b.Navigation("Cartitems");
+                    b.Navigation("CartItems");
 
                     b.Navigation("Orders");
                 });

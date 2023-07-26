@@ -6,47 +6,47 @@ using ZstdSharp.Unsafe;
 
 namespace WebBookStore.Repository
 {
-    public class CartitemRepository : ICartitemRepository
+    public class CartItemRepository : ICartItemRepository
     {
         private readonly DataContext _context;
 
-        public CartitemRepository(DataContext context) 
+        public CartItemRepository(DataContext context) 
         {
             _context = context;
         }
 
-        public bool CartitemExists(int id)
+        public bool CartItemExists(int id)
         {
-            return _context.Cartitems.Any(p => p.Id == id);
+            return _context.CartItems.Any(p => p.Id == id);
         }
 
-        public bool CreateCartitem(int productId, int userId, Cartitem cartitem)
+        public bool CreateCartItem(int productId, int userId, CartItem cartItem)
         {
             var product = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
             var user = _context.Users.Where(p => p.Id == userId).FirstOrDefault();
             
-            cartitem.Product = product;
-            cartitem.User = user;
+            cartItem.Product = product;
+            cartItem.User = user;
      
-            _context.Add(cartitem);
+            _context.Add(cartItem);
             return Save();
         }
 
-        public bool DeleteCartitem(int id)
+        public bool DeleteCartItem(int id)
         {
-            var deleteCartitem = _context.Cartitems.Where(p => p.Id == id).FirstOrDefault();
-            _context.Remove(deleteCartitem);
+            var deleteCartItem = _context.CartItems.Where(p => p.Id == id).FirstOrDefault();
+            _context.Remove(deleteCartItem);
             return Save();
         }
 
-        public ICollection<Cartitem> GetCartitemByOrderId(int orderId)
+        public ICollection<CartItem> GetCartItemByOrderId(int orderId)
         {
-            return _context.Cartitems.Where(p => p.OrderId == orderId).ToList();
+            return _context.CartItems.Where(p => p.OrderId == orderId).ToList();
         }
 
-        public ICollection<Cartitem> GetCartitems()
+        public ICollection<CartItem> GetCartItems()
         {
-            return _context.Cartitems.ToList();
+            return _context.CartItems.ToList();
         }
 
         public bool Save()
@@ -55,11 +55,11 @@ namespace WebBookStore.Repository
             return saved > 0 ? true : false;
         }
 
-        public bool UpdateCartitem(Cartitem cartitem, int id)
+        public bool UpdateCartItem(CartItem cartItem, int id)
         {
-            var cartUpdate = _context.Cartitems.Where(p => p.Id  == id).FirstOrDefault();
-            cartUpdate.QuantityOfProduct = cartitem.QuantityOfProduct;
-            cartUpdate.Status = cartitem.Status;
+            var cartUpdate = _context.CartItems.Where(p => p.Id  == id).FirstOrDefault();
+            cartUpdate.QuantityOfProduct = cartItem.QuantityOfProduct;
+            cartUpdate.Status = cartItem.Status;
             _context.Update(cartUpdate);
             return Save();
         }

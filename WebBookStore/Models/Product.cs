@@ -15,5 +15,5 @@ public class Product
     public string Author { get; set; } = null!;
     public double Price { get; set; }
     public ICollection<ProductCategory> ProductCategories { get; set; }
-    public ICollection<Cartitem> Cartitems { get; set; }
+    public ICollection<CartItem> CartItems { get; set; }
 }

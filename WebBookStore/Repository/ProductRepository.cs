@@ -66,15 +66,15 @@ namespace WebBookStore.Repository
         public bool DeleteProduct(int productId)
         {
             var deleteUpdate = _context.Products.Where(p => p.Id == productId).FirstOrDefault();
-            var productCategorys = _context.ProductCategories.Where(p => p.ProductId == productId).ToList();
-            foreach (var pc in productCategorys)
+            var productcategories = _context.ProductCategories.Where(p => p.ProductId == productId).ToList();
+            foreach (var pc in productcategories)
             {
                 _context.Remove(pc);
             }
-            var cartitems = _context.Cartitems.Where(p => p.ProductId == productId && p.Status == "UnPaid").ToList();
-            foreach (var cartitem in cartitems)
+            var cartItems = _context.CartItems.Where(p => p.ProductId == productId && p.Status == "UnPaid").ToList();
+            foreach (var cartItem in cartItems)
             {
-                _context.Remove(cartitem);
+                _context.Remove(cartItem);
             }
             _context.Remove(deleteUpdate);
             return Save();

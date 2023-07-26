@@ -17,6 +17,6 @@ public class User
     public string Address { get; set; }
     [MaxLength(10)]
     public string Role { get; set; }
-    public ICollection<Cartitem> Cartitems { get; set; }
+    public ICollection<CartItem> CartItems { get; set; }
     public ICollection<Order> Orders { get; set; }
 }

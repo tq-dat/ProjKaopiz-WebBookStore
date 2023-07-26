@@ -26,9 +26,7 @@ namespace WebBookStore.Controllers
         public IActionResult GetUsersByRole(string role)
         {
             var users = _mapper.Map<List<UserDto>>(_userRepository.GetUsersByRole(role));
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(users);
+            return !ModelState.IsValid ? Ok(users) : BadRequest(ModelState);
         }
 
         [HttpGet("{userId:int}")]
@@ -36,29 +34,25 @@ namespace WebBookStore.Controllers
         {
             if (!_userRepository.UserExists(userId)) 
                 return NotFound();
+
             var user = _mapper.Map<UserDto>(_userRepository.GetUser(userId));
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(user);
+            return !ModelState.IsValid ? Ok(user) : BadRequest(ModelState);
         }
         [HttpGet("seachUser/{name}")]
         public IActionResult GetUsersByName(string name)
         {
             var user = _mapper.Map<List<UserDto>>(_userRepository.GetUsersByName(name));
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(user);
+            return !ModelState.IsValid ? Ok(user) : BadRequest(ModelState);
         }
 
-        [HttpGet("cartitem/{userId}")]
-        public IActionResult GetCartitemByUserId(int userId)
+        [HttpGet("cartItem/{userId}")]
+        public IActionResult GetCartItemByUserId(int userId)
         {
             if (!_userRepository.UserExists(userId))
                 return NotFound();
-            var cartitems = _mapper.Map<List<CartitemDto>>(_userRepository.GetCartitemByUserId(userId));
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(cartitems);
+
+            var cartItems = _mapper.Map<List<CartItemDto>>(_userRepository.GetCartItemByUserId(userId));
+            return !ModelState.IsValid ? Ok(cartItems) : BadRequest(ModelState);
         }
 
         [HttpGet("order/{userId}")]
@@ -66,12 +60,12 @@ namespace WebBookStore.Controllers
         {
             if (!_userRepository.UserExists(userId))
                 return NotFound();
+
             var orders = _mapper.Map<List<OrderDto>>(_userRepository.GetOrdersByUserId(userId));
             if (orders.Count <= 0)
                 return NotFound();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(orders);
+
+            return !ModelState.IsValid ? Ok(orders) : BadRequest(ModelState);
         }
 
         [HttpPost("Login")]
@@ -79,19 +73,18 @@ namespace WebBookStore.Controllers
         {
             if (userLogin == null)
                 return BadRequest(ModelState);
-            if (!_userRepository.UserExists(userLogin))
-                return NotFound(ModelState);
-            return Ok("Login success");
+
+            return !_userRepository.UserExists(userLogin) ? Ok("Login success") : NotFound(ModelState);      
         }
 
         [HttpPost("SignUp")]
         public IActionResult SignUp(UserDto userCreate)
         {
-            if (userCreate == null)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var user = _userRepository.GetUsers()
-                .Where(c => c.UserName.Trim().ToUpper() == userCreate.UserName.TrimEnd().ToUpper())
+                .Where(c => c.UserName.Trim().ToUpper() == userCreate.UserName.Trim().ToUpper())
                 .FirstOrDefault();
 
             if (user != null)
@@ -100,47 +93,35 @@ namespace WebBookStore.Controllers
                 return StatusCode(422, ModelState);
             }
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var userMap = _mapper.Map<User>(userCreate);
-
             if (!_userRepository.CreateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
             }
-
             return Ok("Successfully created");
         }
 
         [HttpPut]
         public IActionResult updateUser(UserDto userUpdate) 
         {
-            if (userUpdate == null)
-                return BadRequest(ModelState);
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var userMap = _mapper.Map<User>(userUpdate);
-
             if (!_userRepository.UpdateUser(userMap))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
             }
-
             return Ok("Successfully updated");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
             if (!_userRepository.UserExists(id))
-            {
                 return NotFound();
-            }
 
             if (!_userRepository.DeleteUser(id))
             {

@@ -12,16 +12,14 @@ namespace WebBookStore.Repository
             _context = context;
         }
 
-        public bool CreateOrder(List<int> cartitemIds, Order order)
+        public bool CreateOrder(List<int> cartItemIds, Order order)
         {
-            foreach (int id in cartitemIds)
+            foreach (int id in cartItemIds)
             {
-                var cartitem = _context.Cartitems.Where( p => p.Id == id).FirstOrDefault();
-                cartitem.Order = order;
-                cartitem.Status = "Paid";
-                _context.Update(cartitem);
-                //order.Cartitems.Add(cartitem);
-
+                var cartItem = _context.CartItems.Where( p => p.Id == id).FirstOrDefault();
+                cartItem.Order = order;
+                cartItem.Status = "Paid";
+                _context.Update(cartItem);
             }
             _context.Add(order);
             return Save();
@@ -35,8 +33,7 @@ namespace WebBookStore.Repository
         public ICollection<Order> GetOrderByStatus(string status)
         {
             var orders = _context.Orders.Where(p => p.Status.Contains(status)).ToList();
-            return orders;
-            
+            return orders;   
         }
 
         public ICollection<Order> GetOrders()

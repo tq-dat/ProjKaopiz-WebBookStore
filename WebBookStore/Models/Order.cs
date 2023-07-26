@@ -11,5 +11,5 @@ public class Order
     public int? UserAdminId { get; set; }
     [MaxLength(10)]
     public string Status { get; set; }
-    public ICollection<Cartitem> Cartitems { get; set; }
+    public ICollection<CartItem> CartItems { get; set; }
 }

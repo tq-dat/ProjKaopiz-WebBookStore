@@ -15,7 +15,7 @@ namespace WebBookStore
         {
             //if(!dataContext.ProductCategories.Any())
             //{
-            //    var productCategorys = new List<ProductCategory>()
+            //    var productcategories = new List<ProductCategory>()
             //    {
             //        new ProductCategory()
             //        {
@@ -29,7 +29,7 @@ namespace WebBookStore
             //                {
             //                    new ProductCategory { Category = new Category() { Name = "Tiểu thuyết"}}
             //                },
-            //                Cartitems = new List<Cartitem>()
+            //                CartItems = new List<CartItem>()
             //            }
             //        },
             //        new ProductCategory()
@@ -44,18 +44,18 @@ namespace WebBookStore
             //                {
             //                    new ProductCategory { Category = new Category() { Name = "Sách Tôn giáo - Tâm linh"}}
             //                },
-            //                Cartitems = new List<Cartitem>()
+            //                CartItems = new List<CartItem>()
             //            }
             //        }
             //    };
-            //    dataContext.ProductCategories.AddRange(productCategorys);
+            //    dataContext.ProductCategories.AddRange(productcategories);
             //    dataContext.SaveChanges();
             //}
-            if (!dataContext.Cartitems.Any())
+            if (!dataContext.CartItems.Any())
             {
-                var cartitems = new List<Cartitem>()
+                var cartItems = new List<CartItem>()
                 {
-                    new Cartitem()
+                    new CartItem()
                     {
                         QuantityOfProduct = 2,
                         Status = "UnPaid",
@@ -88,7 +88,7 @@ namespace WebBookStore
                         }
                     }
                 };
-                dataContext.Cartitems.AddRange(cartitems);
+                dataContext.CartItems.AddRange(cartItems);
                 dataContext.SaveChanges();
             }
         }

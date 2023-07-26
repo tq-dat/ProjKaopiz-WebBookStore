@@ -9,7 +9,7 @@ namespace WebBookStore.Interfaces
         ICollection<User> GetUsersByRole(string role);
         User GetUser(int userId);
         ICollection<User> GetUsersByName(string name);
-        ICollection<Cartitem> GetCartitemByUserId (int userId);
+        ICollection<CartItem> GetCartItemByUserId (int userId);
         ICollection<Order> GetOrdersByUserId(int userId);
         bool UserExists (UserLogin userLogin);
         public bool UserExists(int userId);

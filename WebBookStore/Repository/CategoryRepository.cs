@@ -28,8 +28,8 @@ namespace WebBookStore.Repository
         public bool DeleteCategory(int id)
         {
             var deleteCategory = _context.Categories.Where(p => p.Id == id).FirstOrDefault();
-            var productCategorys = _context.ProductCategories.Where(p => p.CategoryId == id).ToList();
-            foreach(var pc in productCategorys) 
+            var productcategories = _context.ProductCategories.Where(p => p.CategoryId == id).ToList();
+            foreach(var pc in productcategories) 
             {
                 _context.Remove(pc);
             }
@@ -54,7 +54,7 @@ namespace WebBookStore.Repository
 
         public bool Save()
         {
-                var saved = _context.SaveChanges();
+            var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
 

@@ -11,70 +11,58 @@ namespace WebBookStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CartitemController : ControllerBase
+    public class CartItemController : ControllerBase
     {
-        private readonly ICartitemRepository _cartitemRepository;
+        private readonly ICartItemRepository _cartItemRepository;
         private readonly IMapper _mapper;
 
-        public CartitemController(ICartitemRepository cartitemRepository, IMapper mapper) 
+        public CartItemController(ICartItemRepository cartItemRepository, IMapper mapper) 
         {
-            _cartitemRepository = cartitemRepository;
+            _cartItemRepository = cartItemRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult GetCartitems()
+        public IActionResult GetCartItems()
         {
-            var cartitems = _mapper.Map<List<Cartitem>>(_cartitemRepository.GetCartitems());
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            return Ok(cartitems);
+            var cartItems = _mapper.Map<List<CartItem>>(_cartItemRepository.GetCartItems());
+            return !ModelState.IsValid ? Ok(cartItems) : BadRequest(ModelState);
         }
 
         [HttpGet("{orderId}")]
-        public IActionResult GetCartitemByOrderId(int orderId)
+        public IActionResult GetCartItemByOrderId(int orderId)
         {
-            var cartitems = _cartitemRepository.GetCartitemByOrderId(orderId);
-            if (cartitems.Count() <= 0)
+            var cartItems = _cartItemRepository.GetCartItemByOrderId(orderId);
+            if (cartItems.Count() <= 0)
                 return BadRequest();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            return Ok(cartitems);
+            return !ModelState.IsValid ? Ok(cartItems) : BadRequest(ModelState);
         }
 
         [HttpPost]
-        public IActionResult CreateCartitem(int productId, int userId, CartitemCreate cartitemCreate)
+        public IActionResult CreateCartItem(int productId, int userId, CartItemCreate cartItemCreate)
         {
-            if (cartitemCreate == null)
+            if (cartItemCreate == null)
                 return BadRequest(ModelState);
 
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var cartitemMap = _mapper.Map<Cartitem>(cartitemCreate);
-
-            if (!_cartitemRepository.CreateCartitem(productId, userId, cartitemMap))
+            var cartItemMap = _mapper.Map<CartItem>(cartItemCreate);
+            if (!_cartItemRepository.CreateCartItem(productId, userId, cartItemMap))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
             }
-
             return Ok("Successfully created");
         }
 
         [HttpPut]
-        public IActionResult UpdateCartitem(CartitemCreate cartitemUpdate,int id)
+        public IActionResult UpdateCartItem(CartItemCreate cartItemUpdate,int id)
         {
-            if(cartitemUpdate == null)
+            if(cartItemUpdate == null)
                 return BadRequest(ModelState);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var cartitemMap = _mapper.Map<Cartitem>(cartitemUpdate);
-            if (!_cartitemRepository.UpdateCartitem(cartitemMap,id))
+            var cartItemMap = _mapper.Map<CartItem>(cartItemUpdate);
+            if (!_cartItemRepository.UpdateCartItem(cartItemMap,id))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
@@ -83,14 +71,12 @@ namespace WebBookStore.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteCartitem(int id)
+        public IActionResult DeleteCartItem(int id)
         {
-            if (!_cartitemRepository.CartitemExists(id))
-            {
+            if (!_cartItemRepository.CartItemExists(id))
                 return NotFound();
-            }
 
-            if (!_cartitemRepository.DeleteCartitem(id))
+            if (!_cartItemRepository.DeleteCartItem(id))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);

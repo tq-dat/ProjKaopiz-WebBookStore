@@ -2,7 +2,7 @@
 
 namespace WebBookStore.Dto
 {
-    public class CartitemCreate
+    public class CartItemCreate
     {
         public int QuantityOfProduct { get; set; }
         [MaxLength(10)]

@@ -22,46 +22,30 @@ namespace WebBookStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCategorys()
+        public IActionResult Getcategories()
         {
-            var categorys = _mapper.Map<List<CategoryDto>>(_categoryRepository.GetCategories());
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            return Ok(categorys);
+            var categories = _mapper.Map<List<CategoryDto>>(_categoryRepository.GetCategories());
+            return !ModelState.IsValid ? Ok(categories) : BadRequest(ModelState);
         }
 
-        [HttpGet("{categoryId}")]
+        [HttpGet("{Id}")]
         public IActionResult GetCategory(int categoryId)
         {
             if (!_categoryRepository.CategoryExists(categoryId))
                 return NotFound();
 
             var category = _mapper.Map<CategoryDto>(_categoryRepository.GetCategory(categoryId));
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            return Ok(category);
-        }
-
-        [HttpGet("product/{categoryId}")]
-        public IActionResult GetProductsByCategoryId(int categoryId)
-        {
-            var produts = _mapper.Map<List<ProductDto>>(_categoryRepository.GetProductsByCategory(categoryId));
-            if (!ModelState.IsValid) 
-                return BadRequest(ModelState);
-            return Ok(produts);
+            return !ModelState.IsValid ? Ok(category) : BadRequest(ModelState);
         }
 
         [HttpPost]
-        public IActionResult CreateCategory( CategoryDto categoryCreate)
+        public IActionResult CreateCategory(CategoryDto categoryCreate)
         {
             if (categoryCreate == null)
                 return BadRequest(ModelState);
 
             var category = _categoryRepository.GetCategories()
-                .Where(c => c.Name.Trim().ToUpper() == categoryCreate.Name.TrimEnd().ToUpper())
+                .Where(c => c.Name.Trim().ToUpper() == categoryCreate.Name.Trim().ToUpper())
                 .FirstOrDefault();
 
             if (category != null)
@@ -70,9 +54,6 @@ namespace WebBookStore.Controllers
                 return StatusCode(422, ModelState);
             }
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var categoryMap = _mapper.Map<Category>(categoryCreate);
 
             if (!_categoryRepository.CreateCategory(categoryMap))
@@ -80,7 +61,6 @@ namespace WebBookStore.Controllers
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
             }
-
             return Ok("Successfully created");
         }
 
@@ -89,16 +69,16 @@ namespace WebBookStore.Controllers
         {
             if (_categoryRepository.GetCategory(id) == null)
                 return NotFound();
+
             if (!_categoryRepository.UpdateCategory(id,name))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
             }
-
             return Ok("Successfully updated");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteCategory(int id)
         {
             if (_categoryRepository.GetCategory(id) == null)
@@ -109,7 +89,6 @@ namespace WebBookStore.Controllers
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
             }
-
             return Ok("Successfully deleted");
         }
     }

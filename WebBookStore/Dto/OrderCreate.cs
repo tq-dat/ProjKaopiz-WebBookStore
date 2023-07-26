@@ -3,6 +3,6 @@
     public class OrderCreate
     {
         public OrderDto orderDto { get; set; }
-        public List<int> cartitemIds { get; set; }
+        public List<int> cartItemIds { get; set; }
     }
 }

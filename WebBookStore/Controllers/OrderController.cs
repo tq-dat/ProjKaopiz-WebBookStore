@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.ObjectModelRemoting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using WebBookStore.Dto;
 using WebBookStore.Interfaces;
 using WebBookStore.Models;
 using WebBookStore.Repository;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace WebBookStore.Controllers
 {
@@ -26,18 +28,14 @@ namespace WebBookStore.Controllers
         public IActionResult GetOrders()
         {
             var orders = _mapper.Map<List<Order>>(_orderRepository.GetOrders());
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(orders);
+            return !ModelState.IsValid? Ok(orders) : BadRequest(ModelState);
         }
 
         [HttpGet("{status}")]
         public IActionResult GetOrderByStatus(string status)
         {
             var orders = _mapper.Map<List<Order>>(_orderRepository.GetOrderByStatus(status));
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(orders);
+            return !ModelState.IsValid ? Ok(orders) : BadRequest(ModelState);
         }
 
         [HttpGet("{id:int}")]
@@ -46,41 +44,30 @@ namespace WebBookStore.Controllers
             if (!_orderRepository.OrderExists(id))
                 return NotFound();
             var order = _mapper.Map<Order>(_orderRepository.GetOrder(id));
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(order);
+            return !ModelState.IsValid ? Ok(order) : BadRequest(ModelState);
         }
 
         [HttpPost]
         public IActionResult CreateOrder(OrderCreate orderCreate)
         {
-            if (orderCreate == null)
-                return BadRequest(ModelState);
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var cartitemIds = orderCreate.cartitemIds;
+            var cartItemIds = orderCreate.cartItemIds;
             var orderMap = _mapper.Map<Order>(orderCreate.orderDto);
 
-            if (!_orderRepository.CreateOrder(cartitemIds, orderMap))
+            if (!_orderRepository.CreateOrder(cartItemIds, orderMap))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
             }
-
             return Ok("Successfully created");
         }
 
         [HttpPut]
         public IActionResult UpdateOrder(int orderId, string status, int manageId)
         {
-            if (!_orderRepository.UpdateOrder(orderId, status, manageId))
-            {
-                return BadRequest();
-            }
-
-            return Ok("Successfully updated");
+            return !_orderRepository.UpdateOrder(orderId, status, manageId) ? Ok("Successfully updated") : BadRequest();
         }
         
     }

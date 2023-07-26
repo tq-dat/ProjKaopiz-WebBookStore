@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VskhXjUuroYFONu6ZXeEVq86j23qt+zArRgOeTaObRNRIzpHJoEIMsr24BqjacN9EZUZpjOKIdkz1BLok0zIrg==",
+  "dgSpecHash": "tNlc+goowm8q/7SHLBeuiHi6o1YxZH1YxaS7QO3GIYIBcFl7aUcEqpFTDj1x6yq5KvEmuPCyHRrfA/W2AmYLLA==",
   "success": true,
-  "projectFilePath": "D:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj",
+  "projectFilePath": "d:\\C#\\VisualStudio\\ProJ_Kaopiz\\WebBookStore\\WebBookStore\\WebBookStore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\TQD\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\TQD\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

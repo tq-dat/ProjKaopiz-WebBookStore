@@ -11,7 +11,7 @@ namespace WebBookStore.Data
 
         }
 
-        public DbSet<Cartitem> Cartitems { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -31,19 +31,19 @@ namespace WebBookStore.Data
                     .WithMany(pc => pc.ProductCategories)
                     .HasForeignKey(c => c.CategoryId);
 
-            modelBuilder.Entity<Cartitem>()
+            modelBuilder.Entity<CartItem>()
                     .HasKey(ci => new { ci.Id });
-            modelBuilder.Entity<Cartitem>()
+            modelBuilder.Entity<CartItem>()
                     .HasOne(p => p.Product)
-                    .WithMany(ci => ci.Cartitems)
+                    .WithMany(ci => ci.CartItems)
                     .HasForeignKey(p => p.ProductId);
-            modelBuilder.Entity<Cartitem>()
+            modelBuilder.Entity<CartItem>()
                     .HasOne(o => o.Order)
-                    .WithMany(ci => ci.Cartitems)
+                    .WithMany(ci => ci.CartItems)
                     .HasForeignKey(o => o.OrderId);
-            modelBuilder.Entity<Cartitem>()
+            modelBuilder.Entity<CartItem>()
                     .HasOne(u => u.User)
-                    .WithMany(ci => ci.Cartitems)
+                    .WithMany(ci => ci.CartItems)
                     .HasForeignKey(u => u.UserId);
 
         }

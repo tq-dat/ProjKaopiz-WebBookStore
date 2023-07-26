@@ -113,7 +113,7 @@ namespace WebBookStore.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Cartitems",
+                name: "CartItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -126,20 +126,20 @@ namespace WebBookStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cartitems", x => x.Id);
+                    table.PrimaryKey("PK_CartItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cartitems_Orders_OrderId",
+                        name: "FK_CartItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Cartitems_Products_ProductId",
+                        name: "FK_CartItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Cartitems_Users_UserId",
+                        name: "FK_CartItems_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -148,18 +148,18 @@ namespace WebBookStore.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cartitems_OrderId",
-                table: "Cartitems",
+                name: "IX_CartItems_OrderId",
+                table: "CartItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cartitems_ProductId",
-                table: "Cartitems",
+                name: "IX_CartItems_ProductId",
+                table: "CartItems",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cartitems_UserId",
-                table: "Cartitems",
+                name: "IX_CartItems_UserId",
+                table: "CartItems",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -177,7 +177,7 @@ namespace WebBookStore.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cartitems");
+                name: "CartItems");
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");

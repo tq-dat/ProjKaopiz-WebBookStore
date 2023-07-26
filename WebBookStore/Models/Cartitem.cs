@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebBookStore.Models;
 
-public class Cartitem
+public class CartItem
 {
     public int Id { get; set; }
     public int QuantityOfProduct { get; set; }

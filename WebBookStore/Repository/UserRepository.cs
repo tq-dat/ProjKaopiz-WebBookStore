@@ -23,25 +23,25 @@ namespace WebBookStore.Repository
         public bool DeleteUser(int id)
         {
             var deleteUser = _context.Users.Where(p => p.Id == id).FirstOrDefault();
-            var deleteCartitemIds = _context.Cartitems.Where(P => P.UserId == id && P.Status == "UnPaid").Select(p =>p.Id).ToList();
-            foreach (var cartitemId in deleteCartitemIds)
+            var deleteCartItemIds = _context.CartItems.Where(P => P.UserId == id && P.Status == "UnPaid").Select(p =>p.Id).ToList();
+            foreach (var cartItemId in deleteCartItemIds)
             {
-                var cartitem = _context.Cartitems.Where(p => p.Id == cartitemId).FirstOrDefault();
-                _context.Remove(cartitem);
+                var cartItem = _context.CartItems.Where(p => p.Id == cartItemId).FirstOrDefault();
+                _context.Remove(cartItem);
             }
             deleteUser.Role = "UserDeleted";
-            _context.Update(deleteUser);
+            _context.Update(deleteUser);    
             return Save();
         }
 
-        public ICollection<Cartitem> GetCartitemByUserId(int userId)
+        public ICollection<CartItem> GetCartItemByUserId(int userId)
         {
-            return _context.Cartitems.Where(c => c.UserId == userId && c.Status == "UnPaid").ToList();
+            return _context.CartItems.Where(c => c.UserId == userId && c.Status == "UnPaid").ToList();
         }
 
         public ICollection<Order> GetOrdersByUserId(int userId)
         {
-            return _context.Cartitems.Where(c => c.UserId == userId && c.Status == "Paid").Select(c => c.Order).ToList();
+            return _context.CartItems.Where(c => c.UserId == userId && c.Status == "Paid").Select(c => c.Order).ToList();
         }
 
         public User GetUser(int userId)

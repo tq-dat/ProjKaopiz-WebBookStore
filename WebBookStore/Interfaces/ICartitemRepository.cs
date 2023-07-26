@@ -2,14 +2,14 @@
 
 namespace WebBookStore.Interfaces
 {
-    public interface ICartitemRepository
+    public interface ICartItemRepository
     {
-        public ICollection<Cartitem> GetCartitems();
-        public ICollection<Cartitem> GetCartitemByOrderId(int orderId);
-        bool UpdateCartitem(Cartitem cartitem,int id);
-        bool DeleteCartitem(int id);
-        bool CreateCartitem(int productId, int userId, Cartitem cartitem);
-        bool CartitemExists(int id);
+        public ICollection<CartItem> GetCartItems();
+        public ICollection<CartItem> GetCartItemByOrderId(int orderId);
+        bool UpdateCartItem(CartItem cartItem,int id);
+        bool DeleteCartItem(int id);
+        bool CreateCartItem(int productId, int userId, CartItem cartItem);
+        bool CartItemExists(int id);
         bool Save();
     }
 }
